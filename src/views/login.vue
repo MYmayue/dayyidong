@@ -66,7 +66,6 @@
                 <p class="ti-r">密码登录</p>
             </div>
         </div>
-
         <!-- 第三方 -->
         <div class="san">
             <div class="san-txt">
@@ -81,6 +80,7 @@
     </div>
 </template>
 <script>
+import  Service from "@/http/service.js"
 export default {
   data() {
     return {
@@ -91,18 +91,31 @@ export default {
     };
   },
   methods: {
-    yan() {
-      this.$axios
-        .post("http://120.53.31.103:84/api/app/smsCode", {
+  async yan() {
+        var reg = /^[1]([3-9])[0-9]{9}$/
+        if(!reg.test(this.form.username)){
+         this.$toast.fail('手机号格式不正确');
+         return false
+        }
+       let res = await Service.post('/smsCode',{
           mobile: this.form.username,
           sms_type: "login"
         })
-        .then(res => {
-          console.log(res);
-        });
+        console.log(res)
     },
-    add() {
-      this.$axios.get("");
+   async add() {
+        if(this.form.yanzheng==''){
+            return false;
+        }
+      let res = await Service.post("/login",{
+       mobile: this.form.username,type:2,client:'1',
+       sms_code:this.form.yanzheng
+     })
+     if(res.code == 200){
+       this.$router.push('/shou')
+     }
+     console.log(res)
+   
     }
   }
 };
