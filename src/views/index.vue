@@ -1,7 +1,7 @@
 <template>
     <div class="index">
         <router-view></router-view>
-        <tabbar></tabbar>
+        <tabbar class="a"></tabbar>
     </div>
 </template>
 <script>
@@ -18,5 +18,7 @@ export default {
 }
 </script>
 <style>
-
+.index{
+    padding-bottom: 43px;
+}
 </style>

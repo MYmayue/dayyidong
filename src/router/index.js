@@ -38,6 +38,11 @@ const routes = [
     name: 'login',
     component:()=>import('@/views/login')
   },
+  {
+    path: '/she',
+    name: 'she',
+    component:()=>import('@/views/index/she')
+  },
   // {
   //   path: '/about',
   //   name: 'About',

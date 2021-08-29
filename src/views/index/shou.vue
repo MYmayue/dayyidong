@@ -17,23 +17,109 @@
   </van-swipe-item>
 </van-swipe>
         </div>
+        <!-- 大威天龙 -->
+        <div class="dawei">
+            <div>
+                <img src="@/assets/imgs/9.png" alt="">
+                <p>大威天龙</p>
+            </div>
+        </div>
+
+        <!-- 资深讲师 -->
+        <div class="zisheng">
+            <!-- 头部 -->
+            <div class="zi_head">
+                <div class="zi_b">
+                    <div class="zi_a"></div>
+                    <p class="zi_txt">资深讲师</p>
+                </div>
+                <p>更多 ></p>
+            </div>
+            <!-- 信息 -->
+            <div class="zi_xin" v-for="(item,index) in zi" :key="index">
+                <img class="zi_img" :src="item.teacher_avatar" alt="">
+                <div class="zi_r">
+                    <p style="font-size:14px">{{item.teacher_name}}</p>
+                    <p>{{item.introduction}}</p>
+                </div>
+            </div>
+        </div>
+        <!-- 推荐课程 -->
+         <div class="zisheng">
+            <!-- 头部 -->
+            <div class="zi_head">
+                <div class="zi_b">
+                    <div class="zi_a"></div>
+                    <p class="zi_txt">推荐课程</p>
+                </div>
+                <p>更多 ></p>
+            </div>
+            <!-- 信息 -->
+            <div class="zi_xin" v-for="(item,index) in ke" :key="index">
+                <img class="ke_img" :src="item.cover_img" alt="">
+                <div class="zi_r">
+                    <p style="font-size:14px">{{item.title}}</p>
+                    <p class="ke_p">{{item.sales_num}}人已报名</p>
+                </div>
+                <div class="ke_r">
+                    {{item.price}}
+                </div>
+            </div>
+        </div>
+        <!-- 名师 -->
+        <div class="zisheng">
+            <!-- 头部 -->
+            <div class="zi_head">
+                <div class="zi_b">
+                    <div class="zi_a"></div>
+                    <p class="zi_txt">名师</p>
+                </div>
+                <p>更多 ></p>
+            </div>
+            <!-- 信息 -->
+            <div class="zi_xin" v-for="(item,index) in ming" :key="index">
+                <img class="zi_img" :src="item.teacher_avatar" alt="">
+                <div class="zi_r">
+                    <p style="font-size:14px">{{item.teacher_name}}</p>
+                    <p>{{item.introduction}}</p>
+                </div>
+            </div>
+        </div>
+        <!--  -->
     </div>
 </template>
 <script>
+import  Service from "@/http/service.js"
 export default {
     data(){
         return{
-            
+            zi:[],
+            ke:[],
+            ming:[]
         }
+    },
+    methods:{
+       async getlist(){
+           let res =await Service.get('/recommend/appIndex')
+           console.log(res.data.data)
+           this.zi = res.data.data[0].list
+           this.ke = res.data.data[1].list
+           this.ming = res.data.data[2].list
+        }
+    },
+    created(){
+        this.getlist()
     }
 }
 </script>
 <style>
 .shou{
     width: 100%;
+    background: #ddd;
     height: 100%;
 }
 .search{
+    background: white;
     width: 100%;
     height: 50px;
     display: flex;
@@ -71,9 +157,79 @@ export default {
     color: #fff;
     font-size: 20px;
     height: 150px;
-  }
-  .lun_img{
+}
+.lun_img{
       width: 100%;
       height: 100%;
   }
+.dawei{
+      background: white;
+      width: 100%;
+      height: 100px;
+      padding-left: 30px;
+      padding-top: 30px;
+      box-sizing: border-box;
+  }
+.dawei img{
+      width: 40px;
+      height: 50px;
+} 
+.zisheng{
+    width: 100%;
+}
+.zi_head{
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+.zi_b{
+    display: flex;
+}
+.zi_a{
+    background: red;
+    height: 20px;
+    width: 4px;
+    margin-top: 15px;
+}
+.zi_txt{
+    margin-left: 5px;
+}
+.zi_xin{
+    width: 90%;
+    height: 75px;
+    background: white;
+    border-radius: 5px;
+    margin-left: 5%;
+    display: flex;
+    padding-left: 40px;
+    padding-top: 20px;
+    box-sizing: border-box;
+    margin-top: 20px;
+}
+.zi_img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.zi_r{
+    margin-left: 10px;
+}
+.ke_img{
+    width: 80px;
+    height: 40px;
+}
+.ke_p{
+    margin-top: 15px;
+}
+.ke_r{
+    margin-top: 36px;
+    margin-left: 103px;
+
+}
 </style>

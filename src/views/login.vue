@@ -4,6 +4,7 @@
         <van-nav-bar
             left-text="返回"
             left-arrow
+            @click-left="$router.go(-1)"
         />
 
         <!-- 标题 -->
@@ -101,7 +102,7 @@ export default {
           mobile: this.form.username,
           sms_type: "login"
         })
-        console.log(res)
+        // console.log(res)
     },
    async add() {
         if(this.form.yanzheng==''){
@@ -111,8 +112,9 @@ export default {
        mobile: this.form.username,type:2,client:'1',
        sms_code:this.form.yanzheng
      })
-     if(res.code == 200){
-       this.$router.push('/shou')
+      console.log(res)
+     if(res.data.code == 200){
+       this.$router.push('/she')
      }
      console.log(res)
    
