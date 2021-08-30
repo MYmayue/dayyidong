@@ -20,10 +20,11 @@
                 </div>
             </div>
         </div>
-
         <!-- 登录 -->
         <div class="deng">
-            <div class="shou-p">
+          <!-- 验证码登录 -->
+          <div v-show="!flag">
+             <div class="shou-p">
                 <img
                     class="shou-img"
                     src="@/assets/imgs/2.png"
@@ -36,14 +37,11 @@
                     placeholder="请输入手机号"
                 >
                 <p class="btn">
-                    <button
-                        class="ma"
-                        @click="yan"
-                    >获取验证码</button>
+                    <span class="ma" @click="yan">{{txt}}</span>
                 </p>
 
             </div>
-            <div class="yan-p">
+           <div class="yan-p">
                 <img
                     class="yan-img"
                     src="@/assets/imgs/3.png"
@@ -56,16 +54,51 @@
                     placeholder="请输入验证码"
                 >
             </div>
-            <div class="deng-btn">
+          </div>
+            <!-- 密码登录 -->
+           <div v-show="flag">
+             <div class="shou-p">
+                <input
+                    v-model="form.username"
+                    class="shou"
+                    type="text"
+                    placeholder="请输入手机号"
+                >
+            </div> 
+           <div class="yan-p">
+                <input
+                    v-model="form.password"
+                    class="yan"
+                    type="text"
+                    placeholder="密码"
+                >
+            </div>
+           </div>
+           <!-- 验证码登录 -->
+            <div class="deng-btn" v-show="!flag">
                 <button
                     class="btn-add"
                     @click="add"
                 >登录</button>
             </div>
-            <div class="ti">
-                <p>*未注册的手机号将自动注册</p>
-                <p class="ti-r">密码登录</p>
+            <!-- 密码登录 -->
+            <div class="deng-btn" v-show="flag">
+                <button
+                    class="btn-add"
+                    @click="addmima"
+                >登录</button>
             </div>
+            <!-- 验证码 -->
+            <div class="ti" v-show="!flag">
+                <p>*未注册的手机号将自动注册</p>
+                <p class="ti-r" @click="mimadeng">密码登录</p>
+            </div>
+            <!-- 密码 -->
+            <div class="ti" v-show="flag">
+                <p>找回密码</p>
+                <p class="ti-r" @click="yandeng">注册/验证码登录</p>
+            </div>
+
         </div>
         <!-- 第三方 -->
         <div class="san">
@@ -73,9 +106,6 @@
                 <p>————————————</p>
                 <p>第三方登录</p>
                 <p>————————————</p>
-            </div>
-            <div class="san-tu">
-
             </div>
         </div>
     </div>
@@ -87,8 +117,11 @@ export default {
     return {
       form: {
         username: "",
-        yanzheng: ""
-      }
+        yanzheng: "",
+        password:''
+      },
+      txt:"获取验证码",
+      flag:false,
     };
   },
   methods: {
@@ -102,7 +135,16 @@ export default {
           mobile: this.form.username,
           sms_type: "login"
         })
-        // console.log(res)
+        var time = 60
+        var timess = setInterval(()=>{
+          this.txt = `还有${time}秒`
+          if(time<=0){
+            clearInterval(timess)
+            this.txt ='获取验证码'
+          }
+          time--
+         },1000);
+        console.log(res)
     },
    async add() {
         if(this.form.yanzheng==''){
@@ -113,11 +155,42 @@ export default {
        sms_code:this.form.yanzheng
      })
       console.log(res)
+      var obj = {
+        token:res.data.data.remember_token,
+        username:res.data.data.nickname
+      }
+      this.$store.commit('addtoken',obj)
      if(res.data.code == 200){
-       this.$router.push('/she')
+       this.$router.push('/wode')
      }
-     console.log(res)
-   
+    },
+    mimadeng(){
+      this.flag = true
+    },
+    yandeng(){
+      this.flag = false
+    },
+    async addmima(){
+       var reg = /^[1]([3-9])[0-9]{9}$/
+        if(!reg.test(this.form.username)){
+         this.$toast.fail('手机号格式不正确');
+         return false
+        }
+        if(this.form.password==''){
+            return false;
+        }
+         let res = await Service.post("/login",{
+       mobile: this.form.username,type:1,client:'1',
+       password:this.form.password
+     })
+     var obj = {
+        token:res.data.data.remember_token,
+        username:res.data.data.nickname
+      }
+      this.$store.commit('addtoken',obj)
+     if(res.data.code == 200){
+       this.$router.push('/wode')
+     }
     }
   }
 };
@@ -191,6 +264,7 @@ export default {
   display: flex;
 }
 .ma {
+  display: inline-block;
   width: 100px;
   height: 30px;
   text-align: center;

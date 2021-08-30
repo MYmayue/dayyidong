@@ -30,7 +30,7 @@ const routes = [
       {
         path: '/wode',
         component:()=>import("@/views/index/wode"),
-      }
+      },
     ]
   },
   {
@@ -43,6 +43,12 @@ const routes = [
     name: 'she',
     component:()=>import('@/views/index/she')
   },
+  {
+    path: '/shezhi',
+    name: 'shezhi',
+    component:()=>import('@/views/index/shezhi')
+  },
+ 
   // {
   //   path: '/about',
   //   name: 'About',

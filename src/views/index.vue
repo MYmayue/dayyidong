@@ -20,5 +20,11 @@ export default {
 <style>
 .index{
     padding-bottom: 43px;
+    box-sizing: border-box;
+}
+.a{
+    position: fixed;
+    bottom: 0;
+    left: 0;
 }
 </style>

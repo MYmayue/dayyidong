@@ -33,7 +33,7 @@
                     <div class="zi_a"></div>
                     <p class="zi_txt">资深讲师</p>
                 </div>
-                <p>更多 ></p>
+                <p @click="addzi">更多 ></p>
             </div>
             <!-- 信息 -->
             <div class="zi_xin" v-for="(item,index) in zi" :key="index">
@@ -101,10 +101,13 @@ export default {
     methods:{
        async getlist(){
            let res =await Service.get('/recommend/appIndex')
-           console.log(res.data.data)
+        //    console.log(res.data.data)
            this.zi = res.data.data[0].list
            this.ke = res.data.data[1].list
            this.ming = res.data.data[2].list
+        },
+        addzi(){
+                this.$router.push("/ke")
         }
     },
     created(){
@@ -115,7 +118,7 @@ export default {
 <style>
 .shou{
     width: 100%;
-    background: #ddd;
+    background: #f7f8fa;
     height: 100%;
 }
 .search{
