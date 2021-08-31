@@ -1,6 +1,6 @@
 <template>
     <div class="ke">
-         <div class="zi_xin" v-for="(item,index) in list" :key="index">
+         <div class="zi_xin" v-for="(item,index) in list" :key="index" @click="$router.push(`/xiang/${item.id}`)">
                 <img class="zi_img" :src="item.avatar" alt="">
                 <div class="zi_r">
                     <p style="font-size:14px">{{item.teacher_name}}</p>
@@ -22,7 +22,8 @@ export default {
             let res = await Service.get('/teacher/search/attrs')
             console.log(res)
             this.list = res.data.data.list
-        }
+        },
+        
     },
     created(){
        this.getlist()

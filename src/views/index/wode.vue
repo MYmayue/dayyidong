@@ -11,7 +11,7 @@
                  <img class="img_s"  src="@/assets/imgs/11.png" alt="">
                  <p class="p_1">{{$store.state.username}}</p>
                  </div>
-                 <p class="p_2">签到</p>
+                 <p class="p_2"><button class="qiand" @click="$router.push('/qian')">签到</button></p>
              </div>
          </div>
          <!-- 宫格 -->
@@ -128,5 +128,13 @@ export default {
     height: 10px;
     background: #ddd;
     margin-top: 20px;
+}
+.qiand{
+    width: 70px;
+    height: 30px;
+    background: blue;
+    color: white;
+    border: 0;
+    border-radius: 20px;
 }
 </style>
