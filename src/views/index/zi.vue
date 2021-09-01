@@ -4,7 +4,7 @@
   <van-tab :title="item.name" v-for="(item,index) in tab" :key="index"  >
      <div class="zisheng">
             <!-- 信息 -->
-            <div class="zi_xin" v-for="(item,index) in ke" :key="index">
+            <div class="zi_xin" v-for="(item,index) in ke" :key="index" @click="$router.push(`/zixiang/${item.id}`)">
                 <img class="ke_img" :src="item.thumb_img" alt="">
                 <div class="zi_r">
                     <p style="font-size:14px">{{item.title}}</p>
@@ -40,7 +40,7 @@ export default {
             let res = await Service.post("/information/index",{
                 page: 1, limit: 10, classify_id: this.cid
             })
-            // console.log(res)
+            console.log(res)
             this.ke = res.data.data.list
         },
         daa(e){

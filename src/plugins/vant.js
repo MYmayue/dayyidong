@@ -1,7 +1,7 @@
 
 import Vue from "vue"
 import {Button,NavBar,Tabbar, TabbarItem ,Icon,Toast, Swipe, SwipeItem
-,Grid, GridItem ,Cell, CellGroup ,Calendar , Tab, Tabs }
+,Grid, GridItem ,Cell, CellGroup ,Calendar , Tab, Tabs,Popup,Collapse ,CollapseItem,Empty} 
  from 'vant'
 Vue.use(Button)
 Vue.use(NavBar)
@@ -18,3 +18,7 @@ Vue.use(CellGroup);
 Vue.use(Calendar);
 Vue.use(Tab);
 Vue.use(Tabs);
+Vue.use(Popup);
+Vue.use(Collapse);
+Vue.use(CollapseItem);
+Vue.use(Empty);

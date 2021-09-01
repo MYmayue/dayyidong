@@ -15,7 +15,7 @@
   <van-tab title="主讲课程">
        <div class="zisheng">
             <!-- 信息 -->
-            <div class="zi_xin" v-for="(item,index) in ke" :key="index">
+            <div class="zi_xin" v-for="(item,index) in ke" :key="index" @click="$router.push(`/xiang_x/${item.id}`)">
                 <img class="ke_img" :src="item.cover_img" alt="">
                 <div class="zi_r">
                     <p style="font-size:14px">{{item.title}}</p>
@@ -92,6 +92,8 @@ export default {
 }
 .zisheng{
     width: 100%;
+    background: #f7f8fa;
+    margin-top: 10px;
 }
 .zi_xin{
     width: 90%;

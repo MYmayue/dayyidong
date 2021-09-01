@@ -3,10 +3,12 @@ import axios from 'axios'
 import { baseUrl } from '@/config'
 // 导入Toast
 import { Toast } from 'vant';
+// 导入vuex
+import store from '@/store'
 let service = axios.create({
     baseURL: baseUrl, // url = base api url + request url
     // withCredentials: true, // send cookies when cross-domain requests
-    timeout: 5000 // request timeout
+    timeout: 10000 // request timeout
   })
   let loading
 // 请求拦截
@@ -18,7 +20,7 @@ service.interceptors.request.use(config =>{
         forbidClick: true,
       });
     //2.token设置(把token添加到请求头中)  vuex
-    config.headers["Authorization"] = sessionStorage.getItem("token");
+    config.headers["Authorization"] ='Bearer '+ store.state.token 
     return config
 })
 // 响应拦截器

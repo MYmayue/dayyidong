@@ -156,7 +156,7 @@ export default {
      })
       console.log(res)
       var obj = {
-        token:`'Bearer '+res.data.data.remember_token` ,
+        token:res.data.data.remember_token ,
         username:res.data.data.nickname
       }
       this.$store.commit('addtoken',obj)

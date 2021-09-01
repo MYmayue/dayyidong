@@ -58,6 +58,16 @@ const routes = [
     name: 'xiang',
     component:()=>import('@/views/index/xiang')
   },
+  {
+    path: '/zixiang/:id',
+    name: 'zixiang',
+    component:()=>import('@/views/index/zixiang')
+  },
+  {
+    path: '/xiang_x/:id',
+    name: 'xiang_x',
+    component:()=>import('@/views/index/xiang_x')
+  }
   // {
   //   path: '/about',
   //   name: 'About',
