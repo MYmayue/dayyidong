@@ -54,8 +54,16 @@
                 </div>
                 <p>更多 ></p>
             </div>
+            <!--  -->
+            <van-card
+                v-for="(item,index) in ke" :key="index"
+                :num="item.price"
+                :price="item.sales_num+'人已报名'"
+                :title="item.title"
+                :thumb="item.cover_img"
+            />
             <!-- 信息 -->
-            <div class="zi_xin" v-for="(item,index) in ke" :key="index">
+           <!-- <div class="zi_xin" v-for="(item,index) in ke" :key="index">
                 <img class="ke_img" :src="item.cover_img" alt="">
                 <div class="zi_r">
                     <p style="font-size:14px">{{item.title}}</p>
@@ -64,8 +72,8 @@
                 <div class="ke_r">
                     {{item.price}}
                 </div>
-            </div>
-        </div>
+            </div> -->
+        </div> 
         <!-- 名师 -->
         <div class="zisheng">
             <!-- 头部 -->

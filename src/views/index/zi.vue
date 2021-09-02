@@ -1,23 +1,34 @@
 <template>
     <div class="zi_zi">
-        <van-tabs v-model="active" @change="daa">
+        <van-tabs v-model="active" @click="daa">
   <van-tab :title="item.name" v-for="(item,index) in tab" :key="index"  >
-     <div class="zisheng">
-            <!-- 信息 -->
-            <div class="zi_xin" v-for="(item,index) in ke" :key="index" @click="$router.push(`/zixiang/${item.id}`)">
-                <img class="ke_img" :src="item.thumb_img" alt="">
-                <div class="zi_r">
-                    <p style="font-size:14px">{{item.title}}</p>
-                    <p class="ke_p">{{item.click_rate}}人已报名</p>
-                </div>
-                <div class="ke_r">
-                    {{item.price}}
-                </div>
-            </div>
-        </div>
+       <van-empty description="暂无数据" v-show="ke.length==0" />
+ <div class="zisheng">
+        <van-list
+  v-model="loading"
+  :finished="finished"
+  finished-text="没有更多了"
+  @load="onLoad"
+>
+  <van-cell >
+      <!-- 信息 --> 
+      <div class="zi_xin" v-for="(item,index) in ke" :key="index" @click="$router.push(`/zixiang/${item.id}`)"> 
+         <img class="ke_img" :src="item.thumb_img" alt="">
+      <div class="zi_r">
+         <p class="ke_p1" style="font-size:14px">{{item.title}}</p>
+         <p class="ke_p">{{item.description}}</p>
+         <p class="ke_p3"> <van-icon name="browsing-history-o" />{{item.click_rate}}</p>
+      </div>
+    </div> 
+       
+  </van-cell>
+</van-list>
+
+
+      </div>
   </van-tab>
 </van-tabs>
-   </div>
+</div>
 </template>
 <script>
 import  Service from "@/http/service.js"
@@ -27,45 +38,51 @@ export default {
             tab:[],
             active:'',
             ke:[],
-            cid:0
+            cid:0,
+            page:1,
+            limit:10,
+            loading: false,
+            finished: false,
         }
     },
     methods:{
        async gettab(){
            let res = await Service.get("/information/classify")
-        //    console.log(res)
+           console.log(res)
            this.tab = res.data.data
         },
         async getaas(){
             let res = await Service.post("/information/index",{
-                page: 1, limit: 10, classify_id: this.cid
+                page: this.page, limit: this.limit, classify_id: this.cid
             })
-            console.log(res)
+            console.log(res,"xxx")
             this.ke = res.data.data.list
         },
-        daa(e){
-            if(e==0){
-              this.cid = 0
-              this.getaas()
-            }
-            if(e==1){
-              this.cid = 9
-              this.getaas()
-            }
-            if(e==2){
-              this.cid = 10
-              this.getaas()
-            }
-            if(e==3){
-              this.cid = 33
-              this.getaas()
-            }
-            if(e==4){
-              this.cid = 33
-              this.getaas()
-            }
-            
+        aa(){
+            console.log("123")
+        },
+        daa(index){
+            console.log(index);
+             console.log(this.tab[index].id)
+            this.cid = this.tab[index].id
+            this.getaas() 
+        },
+    onLoad() {
+      // 异步更新数据
+      // setTimeout 仅做示例，真实场景中一般为 ajax 请求
+      setTimeout(() => {
+        // for (let i = 0; i < this.limit; i++) {
+        //   this.ke.push(this.ke.length + 1);
+        // }
+        // 加载状态结束
+        this.loading = false;
+        // 数据全部加载完成
+        if (this.ke.length <= this.limit) {
+          this.finished = true;
         }
+      }, 1000);
+    },
+
     },
     created(){
         this.gettab()
@@ -80,8 +97,11 @@ export default {
     background: #f7f8fa;
 }
 .ke_img{
-    width: 80px;
-    height: 40px;
+   width: 35%;
+   height: 90%;
+   margin-top: 5px;
+   margin-left: 5px;
+   border-radius: 5px;
 }
 .ke_p{
     margin-top: 15px;
@@ -95,17 +115,25 @@ export default {
 }
 .zi_xin{
     width: 90%;
-    height: 75px;
+    height: 85px;
     background: white;
     border-radius: 5px;
     margin-left: 5%;
     display: flex;
-    padding-left: 40px;
-    padding-top: 20px;
-    box-sizing: border-box;
     margin-top: 20px;
 }
 .zi_r{
-    margin-left: 10px;
+    margin-left: 20px;
+}
+.ke_p1{
+    margin-top: 5px;
+}
+.ke_p{
+    margin-top: 5px;
+    color: darkgrey;
+}
+.ke_p3{
+    color: #ddd;
+    margin-top: 10px;
 }
 </style>

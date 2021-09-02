@@ -19,8 +19,11 @@ export default {
 </script>
 <style>
 .index{
-    padding-bottom: 43px;
-    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    background: #f7f8fa;
+    padding-bottom: 43px; 
+     box-sizing: border-box;
 }
 .a{
     position: fixed;
